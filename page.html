@@ -7,60 +7,58 @@
     <title>Username Generator</title>
 </head>
 <body>
-    <h2>Username Generator</h2>
+  <h2>Username Generator</h2>
 
-    <form id="inputForm">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" name="firstName" required>
+  <form id="inputForm">
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" required>
 
-        <label for="secondName">Second Name:</label>
-        <input type="text" id="secondName" name="secondName" required>
+    <label for="secondName">Second Name:</label>
+    <input type="text" id="secondName" name="secondName" required>
 
-        <button type="button" onclick="generateUsernames()">Generate Usernames</button>
-    </form>
+    <button type="button" onclick="generateUsernames()">Generate Usernames</button>
+  </form>
 
-    <h3>Generated Usernames:</h3>
-    <ul id="usernamesList"></ul>
-
+  <h3>Generated Usernames:</h3>
+  <ul id="usernamesList"></ul>
 
 <script>
   function generateUsernames() {
-      var firstName = document.getElementById('firstName').value;
-      var secondName = document.getElementById('secondName').value;
+    var firstName = document.getElementById('firstName').value;
+    var secondName = document.getElementById('secondName').value;
 
-      // Make a POST request to your server
-      fetch('http://localhost:3036/get_input', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              FirstName: firstName,
-              SecondName: secondName,
-          }),
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.status === 'success') {
-              displayUsernames(data.usernames);
-          } else {
-              console.error('Error:', data.message);
-          }
-      })
-      .catch(error => console.error('Error:', error));
+    // Make a POST request to your server
+    fetch('http://localhost:3036/get_input', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        FirstName: firstName,
+        SecondName: secondName,
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+          displayUsernames(data.usernames);
+        } else {
+          console.error('Error:', data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
   }
 
   function displayUsernames(usernames) {
-      var usernamesList = document.getElementById('usernamesList');
-      usernamesList.innerHTML = '';
+    var usernamesList = document.getElementById('usernamesList');
+    usernamesList.innerHTML = '';
 
-      usernames.forEach(username => {
-          var listItem = document.createElement('li');
-          listItem.textContent = username;
-          usernamesList.appendChild(listItem);
-      });
+    usernames.forEach(username => {
+      var listItem = document.createElement('li');
+      listItem.textContent = username;
+      usernamesList.appendChild(listItem);
+    });
   }
 </script>
 </body>
 </html>
-
